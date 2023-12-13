@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Paziente extends Model
 {   
     protected $table = 'pazienti';
+    protected $fillable = [];
     use HasFactory;
 
     public function esami()
