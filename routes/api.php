@@ -25,27 +25,35 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::controller(PazienteController::class)->prefix('pazienti') -> group(function($router){
     Route::get('index','index');
     Route::get('create','create');
-    Route::get('store','store');
+    Route::post('store','store');
     Route::get('show/{id}','show');
     Route::get('edit','edit');
     Route::get('destroy','destroy');
+    Route::post('update/{id}', 'update');
+    Route::delete('destroy/{id}', 'destroy');
+    Route::get('/get-esami-by-paz-id/{id}', 'getEsamibyPazId');
 });
 
 Route::controller(DottoreController::class)->prefix('dottori') -> group(function($router){
     Route::get('index','index');
     Route::get('create','create');
-    Route::get('store','store');
+    Route::post('store','store');
     Route::get('show/{id}','show');
     Route::get('edit','edit');
     Route::get('destroy','destroy');
-    Route::put('update/{id}', 'update');
+    Route::post('update/{id}', 'update');
+    Route::delete('destroy/{id}', 'destroy');
+    Route::get('/get-esami-by-dottore-id/{id}', 'getEsamebyDottId');
 });
 
 Route::controller(EsameController::class)->prefix('esami') -> group(function($router){
     Route::get('index','index');
     Route::get('create','create');
-    Route::get('store','store');
-    Route::get('show','show');
+    Route::post('store','store');
+    Route::get('show/{id}','show');
     Route::get('edit','edit');
     Route::get('destroy','destroy');
+    Route::post('update/{id}', 'update');
+    Route::delete('destroy/{id}', 'destroy');
+    
 });

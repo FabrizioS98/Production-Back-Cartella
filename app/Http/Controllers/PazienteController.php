@@ -8,64 +8,89 @@ use Illuminate\Http\Request;
 
 class PazienteController extends Controller
 {
-    /**
+     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $pazienti = Paziente::all();
+        $dottori = Paziente::all();
 
-        return response()->json(['pazienti' => $pazienti]);
+        return response()->json(['dottori' => $dottori]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+    
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'specializzazione' => 'required'
+        ]);
+
+        $pazienti = new Paziente();
+
+        $pazienti->name = $request->input('name');
+        $pazienti->specializzazione = $request->input('specializzazione');
+
+        $pazienti->save();
+
+        return response()->json(['pazienti' => $pazienti]);
     }
+
 
     /**
      * Display the specified resource.
      */
+   
     public function show($id)
     {
 
-        $pazienti =Paziente::find($id);
+        $pazienti = Paziente::find($id);
   
 
         return response()->json(['pazienti' => $pazienti]);
     }
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Paziente $paziente)
-    {
-        //
-    }
+    
 
+  
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Paziente $paziente)
-    {
-        //
-    }
+    public function update(Request $request, $id)
+{
+    $request->validate([
+        'name' => 'required',
+        'specializzazione' => 'required'
+    ]);
 
+    // Trova il pazienti dal database utilizzando l'id
+    $pazienti = Paziente::find($id);
+
+    // Aggiornamento dei dati del pazienti
+    $pazienti->update($request->all());
+
+    return response()->json(['pazienti' => $pazienti]);
+}
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Paziente $paziente)
+    public function destroy($id)
+    {  $paziente = Paziente::find($id);
+        $paziente->delete();
+
+        return response()->json(['message' => 'Paziente eliminato con successo']);
+    }
+
+    public function getEsamibyPazId($id)
     {
-        //
+        // Trova il dottore per l'id specificato
+        $paziente = Paziente::where('id', $id)->with('esami')->first();
+
+        
+
+        return response()->json(['esami' => $paziente]);
     }
 }

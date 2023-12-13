@@ -6,6 +6,7 @@ use App\Models\Dottore;
 use App\Http\Controllers\Controller;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class DottoreController extends Controller
 {
@@ -32,8 +33,21 @@ class DottoreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'name' => 'required',
+            'specializzazione' => 'required'
+        ]);
+
+        $dottore = new Dottore();
+
+        $dottore->name = $request->input('name');
+        $dottore->specializzazione = $request->input('specializzazione');
+
+        $dottore->save();
+
+        return response()->json(['dottore' => $dottore]);
     }
+
 
     /**
      * Display the specified resource.
@@ -42,8 +56,8 @@ class DottoreController extends Controller
     public function show($id)
     {
 
-        $dottore =Dottore::find($id);
-  
+        $dottore = Dottore::find($id);
+        Log::info($dottore);
 
         return response()->json(['dottore' => $dottore]);
     }
@@ -52,33 +66,51 @@ class DottoreController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Dottore $id)
+    public function edit(Dottore $dottore)
     {
-        
+        $data = [
+            "dottore" => $dottore
+        ];
+		
+        return view('dottori.edit', $data);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Dottore $dottore)
-    {
+    public function update(Request $request, $id)
+    {   
         $request->validate([
-            'name' => 'required',
-            'specializzazione' => 'required',
-            
+            'name' => 'required|string',
+            'specializzazione' => 'required|string'
         ]);
-
+        
+        // Trova il dottore dal database utilizzando l'id
+        $dottore = Dottore::find($id);
+    Log::info($dottore);
         // Aggiornamento dei dati del dottore
         $dottore->update($request->all());
-
-        return response()->json(['dottore' => $dottore]);
+        
+        return response()->json(['dottori' => $dottore]);
     }
-
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Dottore $dottore)
+    public function destroy($id)
+    {  $dottore = Dottore::find($id);
+        $dottore->delete();
+
+        return response()->json(['message' => 'Dottore eliminato con successo']);
+    }
+
+
+    public function getEsamebyDottId($id)
     {
-        //
+        // Trova il dottore per l'id specificato
+        $dottore = Dottore::where('id', $id)->with('esami.paziente')->first();
+
+        
+
+        return response()->json(['esami' => $dottore]);
     }
 }

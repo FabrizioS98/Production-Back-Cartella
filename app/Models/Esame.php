@@ -14,11 +14,11 @@ class Esame extends Model
 
     public function dottore()
     {
-        return $this->belongsTo(Dottore::class, 'id_dottore');
+        return $this->hasOne(Dottore::class, 'id_dottore');
     }
 
     public function paziente()
     {
-        return $this->belongsTo(Paziente::class, 'id_paziente');
+        return $this->hasOne(Paziente::class, 'id', 'id_paziente');
     }
 }
