@@ -15,12 +15,17 @@ class dottore extends Seeder
     {
         ModelsDottore::insert([
             'name' => 'Dott. Leo',
+            'email'=> 'ciao@email.it',
+            'password'=> 'XXXXXXXXXXXXXXXX',
             'specializzazione' => 'Cardiologia',
+
          
         ]);
 
         ModelsDottore::insert([
             'name' => 'Dott. Pippo',
+            'email'=> 'bell@email.it',
+            'password'=> 'VVVVVVVVV',
             'specializzazione' => 'Medicina Generale',
        
         ]);

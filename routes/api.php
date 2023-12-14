@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DottoreController;
 use App\Http\Controllers\EsameController;
 use App\Http\Controllers\PazienteController;
@@ -56,4 +57,16 @@ Route::controller(EsameController::class)->prefix('esami') -> group(function($ro
     Route::post('update/{id}', 'update');
     Route::delete('destroy/{id}', 'destroy');
     
+});
+
+
+
+
+Route::group(['middleware' => 'api','prefix' => 'auth'],
+ function ($router) {
+    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('register', [AuthController::class, 'register']);
+    Route::post('/logout', [AuthController::class, 'logout']);
+   // Route::post('/refresh', [AuthController::class, 'refresh']);
+   // Route::get('/user-profile', [AuthController::class, 'userProfile']);    
 });
