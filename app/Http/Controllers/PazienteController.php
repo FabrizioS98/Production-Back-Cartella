@@ -13,9 +13,9 @@ class PazienteController extends Controller
      */
     public function index()
     {
-        $dottori = Paziente::all();
+        $pazienti = Paziente::all();
 
-        return response()->json(['dottori' => $dottori]);
+        return response()->json(['pazienti' => $pazienti]);
     }
 
     
@@ -27,13 +27,17 @@ class PazienteController extends Controller
     {
         $request->validate([
             'name' => 'required',
-            'specializzazione' => 'required'
+            'cognome' => 'required',
+            'codice_fiscale' => 'required',
+            'data_nascita' => 'required'
         ]);
 
         $pazienti = new Paziente();
 
         $pazienti->name = $request->input('name');
-        $pazienti->specializzazione = $request->input('specializzazione');
+        $pazienti->cognome = $request->input('cognome');
+        $pazienti->codice_fiscale = $request->input('codice_fiscale');
+        $pazienti->data_nascita = $request->input('data_nascita');
 
         $pazienti->save();
 
@@ -63,7 +67,9 @@ class PazienteController extends Controller
 {
     $request->validate([
         'name' => 'required',
-        'specializzazione' => 'required'
+            'cognome' => 'required',
+            'codice_fiscale' => 'required',
+            'data_nascita' => 'required'
     ]);
 
     // Trova il pazienti dal database utilizzando l'id

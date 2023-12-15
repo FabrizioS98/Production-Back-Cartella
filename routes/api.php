@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DottoreController;
 use App\Http\Controllers\EsameController;
 use App\Http\Controllers\PazienteController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -35,7 +36,7 @@ Route::controller(PazienteController::class)->prefix('pazienti') -> group(functi
     Route::get('/get-esami-by-paz-id/{id}', 'getEsamibyPazId');
 });
 
-Route::controller(DottoreController::class)->prefix('dottori') -> group(function($router){
+Route::controller(UserController::class)->prefix('users') -> group(function($router){
     Route::get('index','index');
     Route::get('create','create');
     Route::post('store','store');

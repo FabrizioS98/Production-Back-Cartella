@@ -11,11 +11,7 @@ class Dottore extends Model
 {   
     use HasFactory, Notifiable;
     protected $table = 'dottori';
-    protected $fillable = [
-        'name',
-        'email',
-        'password'
-    ];
+   
    
     
 

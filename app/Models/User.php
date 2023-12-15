@@ -13,7 +13,8 @@ class User extends Authenticatable implements JWTSubject
     protected $fillable = [
         'name',
         'email',
-        'password'
+        'password',
+        'specializzazione'
         // Aggiungi gli altri campi che desideri permettere di essere assegnati in massa
     ];
 
@@ -32,6 +33,12 @@ class User extends Authenticatable implements JWTSubject
      *
      * @return mixed
      */
+
+     public function esami()
+    {
+        return $this->hasMany(Esame::class, 'id_dottore');
+    }
+    
     public function getJWTIdentifier()
     {
         return $this->getKey();

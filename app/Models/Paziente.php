@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Paziente extends Model
 {   
     protected $table = 'pazienti';
-    protected $fillable = [];
+    protected $fillable = ['name','cognome', 'codice_fiscale', 'data_nascita'];
     use HasFactory;
 
     public function esami()
