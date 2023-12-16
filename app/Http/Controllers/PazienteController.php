@@ -66,7 +66,7 @@ class PazienteController extends Controller
     public function update(Request $request, $id)
 {
     $request->validate([
-        'name' => 'required',
+            'name' => 'required',
             'cognome' => 'required',
             'codice_fiscale' => 'required',
             'data_nascita' => 'required'
