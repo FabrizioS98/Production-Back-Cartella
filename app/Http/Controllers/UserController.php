@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Esame;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -89,13 +90,15 @@ class UserController extends Controller
     }
 
 
-    public function getEsamebyDottId($id)
+     public function getEsamebyDottId($id)
     {
         // Trova il user per l'id specificato
-        $user = User::where('id', $id)->with('esami.paziente')->first();
+        $user = User::where('id', $id)->with('esami')->first();
 
         
 
-        return response()->json(['esami' => $user]);
-    }
+        return response()->json(['user' => $user]);
+    } 
+
+    
 }

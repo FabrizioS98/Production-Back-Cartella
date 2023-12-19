@@ -13,6 +13,7 @@ class Paziente extends Model
 
     public function esami()
     {
+        
         return $this->hasMany(Esame::class, 'id_paziente');
     }
     

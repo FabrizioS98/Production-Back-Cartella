@@ -24,7 +24,7 @@ class esame extends Seeder
         ModelsEsame::insert([
             'name' => 'Esame Radiografico',
             'descrizione' => 'Medicina',
-            'id_dottore' => '2',
+            'id_dottore' => '1',
             'id_paziente' => '1',
         ]);
     }

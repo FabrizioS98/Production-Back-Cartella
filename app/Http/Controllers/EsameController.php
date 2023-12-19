@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Esame;
-use App\Http\Controllers\Controller;
 use App\Models\Dottore;
-use App\Models\Paziente;
+
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 
 class EsameController extends Controller
 {
@@ -17,7 +18,7 @@ class EsameController extends Controller
     {
         $esami = Esame::all();
 
-        return response()->json(['esami' => $esami]);
+        return $esami;
     }
 
     /**
@@ -40,7 +41,7 @@ class EsameController extends Controller
             'id_paziente' => 'required', // Assicurati che il campo id_chiave_esterna_2 sia presente nella richiesta
         ]);
 
-        $esami = new Paziente();
+        $esami = new Esame();
 
         $esami->name = $request->input('name');
         $esami->descrizione = $request->input('descrizione');
@@ -48,7 +49,7 @@ class EsameController extends Controller
         $esami->id_paziente = $request->input('id_paziente');
         $esami->save();
 
-        return response()->json(['esami' => $esami]);
+        return $esami;
     }
 
     /**
@@ -56,10 +57,10 @@ class EsameController extends Controller
      */
     public function show($id)
     {
-        $esami = Paziente::find($id);
+        $esami = Esame::find($id);
   
 
-        return response()->json(['esami' => $esami]);
+        return $esami;
     }
 
     /**
@@ -87,7 +88,7 @@ class EsameController extends Controller
             // Aggiornamento dei dati del esami
             $esami->update($request->all());
         
-            return response()->json(['esami' => $esami]);
+            return $esami;
         }
     
 
@@ -100,4 +101,14 @@ class EsameController extends Controller
 
         return response()->json(['message' => 'esame eliminato con successo']);
     }
+
+    public function getEsamebyDottId($id)
+    {
+        // Trova il user per l'id specificato
+        $user = User::where('id', $id)->with('dottore')->first();
+
+        
+
+        return $user;
+    } 
 }

@@ -13,9 +13,9 @@ class PazienteController extends Controller
      */
     public function index()
     {
-        $pazienti = Paziente::all();
+        $pazienti = Paziente::all()->toArray();
 
-        return response()->json(['pazienti' => $pazienti]);
+        return $pazienti;
     }
 
     
@@ -41,7 +41,7 @@ class PazienteController extends Controller
 
         $pazienti->save();
 
-        return response()->json(['pazienti' => $pazienti]);
+        return $pazienti;
     }
 
 
@@ -55,7 +55,7 @@ class PazienteController extends Controller
         $pazienti = Paziente::find($id);
   
 
-        return response()->json(['pazienti' => $pazienti]);
+        return $pazienti;
     }
     
 
@@ -78,7 +78,7 @@ class PazienteController extends Controller
     // Aggiornamento dei dati del pazienti
     $pazienti->update($request->all());
 
-    return response()->json(['pazienti' => $pazienti]);
+    return $pazienti;
 }
     /**
      * Remove the specified resource from storage.
@@ -92,11 +92,14 @@ class PazienteController extends Controller
 
     public function getEsamibyPazId($id)
     {
-        // Trova il dottore per l'id specificato
+        // Trova il paziente per l'id specificato
         $paziente = Paziente::where('id', $id)->with('esami')->first();
 
-        
+        if (!$paziente) {
+            return response()->json(['message' => 'Paziente non trovato'], 404);
+        }
+    
 
-        return response()->json(['esami' => $paziente]);
+        return response()->json(['esame' => $paziente]);
     }
 }

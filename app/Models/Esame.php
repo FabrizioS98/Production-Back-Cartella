@@ -14,7 +14,7 @@ class Esame extends Model
 
     public function dottore()
     {
-        return $this->hasOne(User::class, 'id_dottore');
+        return $this->hasOne(User::class, 'id', 'id_dottore');
     }
 
     public function paziente()
